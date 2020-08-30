@@ -50,11 +50,11 @@ public class Ejercicio_16v3 {
 		return menu;
 	}
 
-	public static int MENU_CLASICO = 300;
-	public static int MENU_CELIACOS = 310;
-	public static int MENU_KOSHER = 430;
-	public static int MENU_LIGHT = 290;
-	public static int BEBIDAS = 30;
+	public static final int MENU_CLASICO = 300;
+	public static final int MENU_CELIACOS = 310;
+	public static final int MENU_KOSHER = 430;
+	public static final int MENU_LIGHT = 290;
+	public static final int BEBIDAS = 30;
 
 	public static Scanner input = new Scanner(System.in);
 
