@@ -1,0 +1,139 @@
+package TP2;
+
+import java.util.Scanner;
+
+public class Ejercicio_16v3 {
+
+	public static String ingresarValidarRespuestas(String mensaje, String mensajeError, String condicion1,
+			String condicion2) {
+		String respuesta;
+
+		System.out.println(mensaje);
+		respuesta = input.nextLine();
+
+		while (!respuesta.equals(condicion1) && !respuesta.equals(condicion2)) {
+
+			System.out.println(mensajeError);
+			respuesta = input.nextLine();
+		}
+
+		return respuesta;
+	}
+
+	public static int ingresarValidarNumeros(String mensaje, String mensajeError, int desde, int hasta) {
+		int numero;
+
+		System.out.println(mensaje);
+		numero = input.nextInt();
+		input.nextLine();
+
+		while (numero < desde || hasta > 0 && numero > hasta) {
+
+			System.out.println(mensajeError);
+			numero = input.nextInt();
+			input.nextLine();
+		}
+
+		return numero;
+	}
+
+	public static String ingresarValidarMenu(String mensaje, String mensajeError) {
+		String menu;
+		System.out.println(mensaje);
+		menu = input.nextLine();
+		while (!menu.equals("celiaco") && !menu.equals("light") && !menu.equals("kosher") && !menu.equals("clasico")
+				&& !menu.equals("fin")) {
+
+			System.out.println(mensajeError);
+			menu = input.nextLine();
+		}
+		return menu;
+	}
+
+	public static int MENU_CLASICO = 300;
+	public static int MENU_CELIACOS = 310;
+	public static int MENU_KOSHER = 430;
+	public static int MENU_LIGHT = 290;
+	public static int BEBIDAS = 30;
+
+	public static Scanner input = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		String respuesta;
+		String menu;
+
+		int totalInvitados;
+		int invitadosRestantes;
+		int invitadosPorMenu;
+		int valorKosher, valorClasico, valorCeliaco, valorLight, valorComidas, valorTotal, valorBebidas;
+		int cantKosher, cantClasico, cantCeliaco, cantLight;
+
+		valorKosher = 0;
+		valorLight = 0;
+		valorClasico = 0;
+		valorCeliaco = 0;
+
+		cantKosher = 0;
+		cantClasico = 0;
+		cantLight = 0;
+		cantCeliaco = 0;
+
+		respuesta = ingresarValidarRespuestas("Bienvenido desea calcular el precio del catering para su fiesta? s/n ",
+				"Error, por favor ingrese s para continuar n para finalizar", "s", "n");
+
+		if (respuesta.equals("s")) {
+			totalInvitados = ingresarValidarNumeros("Ingrese los invitados para la fiesta",
+					"Error, ingrese una cantidad de invitados mayor a 0", 1, 0);
+			invitadosRestantes = totalInvitados;
+
+			menu = ingresarValidarMenu(
+					"Ingrese el menu para los invitados, clasico/kosher,light,celiaco, o fin para finalizar",
+					"Error, por favor vuelva a ingresar uno de los menues validos, clasico/kosher,light,celiaco, o fin para finalizar");
+
+			while (!menu.equals("fin")) {
+				invitadosPorMenu = ingresarValidarNumeros("Ingrese los invitados por menu:",
+						"Error, la cantidad de invitados ingresada supera la restante", 1, invitadosRestantes);
+				invitadosRestantes -= invitadosPorMenu;
+
+				switch (menu) {
+
+				case "kosher":
+					valorKosher += invitadosPorMenu * MENU_KOSHER;
+					cantKosher += invitadosPorMenu;
+					break;
+
+				case "clasico":
+					valorClasico += invitadosPorMenu * MENU_CLASICO;
+					cantClasico += invitadosPorMenu;
+					break;
+
+				case "celiaco":
+					valorCeliaco += invitadosPorMenu * MENU_CELIACOS;
+					cantCeliaco += invitadosPorMenu;
+					break;
+
+				case "light":
+					valorLight += invitadosPorMenu * MENU_LIGHT;
+					cantLight += invitadosPorMenu;
+					break;
+
+				}
+				menu = ingresarValidarMenu(
+						"Ingrese el menu para los invitados, clasico/kosher,light,celiaco, o fin para finalizar",
+						"Error, por favor vuelva a ingresar uno de los menues validos, clasico/kosher,light,celiaco, o fin para finalizar");
+			}
+
+			valorBebidas = totalInvitados * BEBIDAS;
+			valorComidas = valorClasico + valorLight + valorKosher + valorCeliaco;
+			valorTotal = valorComidas + valorBebidas;
+			String mensaje = "Usted ha invitado: %d personas.\nClasico %d $%d\nCeliaco %d $%d\nKosher %d $%d\nLight %d $%d\nEl costo de la comida es: $%d\nEl costo de las bebidas es: $%d\nEl valor total es: $%d";
+
+			System.out.println(
+					String.format(mensaje, totalInvitados, cantClasico, valorClasico, cantCeliaco, valorCeliaco,
+							cantKosher, valorKosher, cantLight, valorLight, valorComidas, valorBebidas, valorTotal));
+
+		} else {
+			System.out.println("Ha ingresado n");
+		}
+	}
+}
